@@ -101,8 +101,8 @@ func (r *VSphereCPIConfigReconciler) mapCPIConfigToDataValuesNonParavirtual( // 
 	if c.TLSThumbprint != "" {
 		d.VSphereCPI.TLSThumbprint = c.TLSThumbprint
 	}
-	if c.Server != "" {
-		d.VSphereCPI.Server = c.Server
+	if c.VCenterAPIEndpoint != "" {
+		d.VSphereCPI.Server = c.VCenterAPIEndpoint
 	}
 	if c.Datacenter != "" {
 		d.VSphereCPI.Datacenter = c.Datacenter
@@ -131,15 +131,15 @@ func (r *VSphereCPIConfigReconciler) mapCPIConfigToDataValuesNonParavirtual( // 
 			d.VSphereCPI.Nsxt.PodRoutingEnabled = c.NSXT.PodRoutingEnabled
 		}
 
-		if c.NSXT.InsecureFlag {
-			d.VSphereCPI.Nsxt.InsecureFlag = c.NSXT.InsecureFlag
+		if c.NSXT.Insecure {
+			d.VSphereCPI.Nsxt.InsecureFlag = c.NSXT.Insecure
 		}
-		if c.NSXT.Routes != nil {
-			d.VSphereCPI.Nsxt.Routes.RouterPath = c.NSXT.Routes.RouterPath
-			d.VSphereCPI.Nsxt.Routes.ClusterCidr = c.NSXT.Routes.ClusterCidr
+		if c.NSXT.Route != nil {
+			d.VSphereCPI.Nsxt.Routes.RouterPath = c.NSXT.Route.RouterPath
+			d.VSphereCPI.Nsxt.Routes.ClusterCidr = c.NSXT.Route.ClusterCidr
 		}
-		if c.NSXT.NSXTCredentialsRef != nil {
-			nsxtSecret, err := r.getSecret(ctx, c.NSXT.NSXTCredentialsRef.Namespace, c.NSXT.NSXTCredentialsRef.Name)
+		if c.NSXT.CredentialRef != nil {
+			nsxtSecret, err := r.getSecret(ctx, c.NSXT.CredentialRef.Namespace, c.NSXT.CredentialRef.Name)
 			if err != nil {
 				return nil, err
 			}
@@ -169,9 +169,9 @@ func (r *VSphereCPIConfigReconciler) mapCPIConfigToDataValuesNonParavirtual( // 
 		if c.NSXT.RootCAData != "" {
 			d.VSphereCPI.Nsxt.RootCAData = c.NSXT.RootCAData
 		}
-		if c.NSXT.SecretName != "" {
-			d.VSphereCPI.Nsxt.SecretName = c.NSXT.SecretName
-			d.VSphereCPI.Nsxt.SecretNamespace = c.NSXT.SecretNamespace
+		if c.NSXT.CPISecretRef != nil {
+			d.VSphereCPI.Nsxt.SecretName = c.NSXT.CPISecretRef.Name
+			d.VSphereCPI.Nsxt.SecretNamespace = c.NSXT.CPISecretRef.Namespace
 		}
 	}
 	if c.IPFamily != "" {

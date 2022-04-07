@@ -13,7 +13,7 @@ type VSphereCPIConfigSpec struct {
 	VSphereCPI VSphereCPI `json:"vsphereCPI"`
 }
 
-type NSXTRoute struct {
+type NSXTRouteConfig struct {
 	// NSX-T T0/T1 logical router path
 	// +kubebuilder:validation:Optional
 	RouterPath string `json:"routerPath"`
@@ -31,20 +31,20 @@ type NSXT struct {
 
 	// Route configuration for NSXT
 	// +kubebuilder:validation:Optional
-	Routes *NSXTRoute `json:"routes"`
+	Route *NSXTRouteConfig `json:"route"`
 
 	// A secret reference that contains Nsx-T login credentials to access NSX-T
 	// consists of the field username and password
 	// +kubebuilder:validation:Optional
-	NSXTCredentialsRef *v1.SecretReference `json:"nsxtCredentialsRef"`
+	CredentialRef *v1.SecretReference `json:"credentialRef"`
 
 	// The NSX-T server
 	// +kubebuilder:validation:Optional
 	Host string `json:"host"`
 
-	// InsecureFlag is to be set to true if NSX-T uses self-signed cert
+	// Insecure is to be set to true if NSX-T uses self-signed cert
 	// +kubebuilder:validation:Optional
-	InsecureFlag bool `json:"insecureFlag"`
+	Insecure bool `json:"insecure"`
 
 	// RemoteAuth is to be set to true if NSX-T uses remote authentication (authentication done through the vIDM)
 	// +kubebuilder:validation:Optional
@@ -70,20 +70,16 @@ type NSXT struct {
 	// +kubebuilder:validation:Optional
 	RootCAData string `json:"rootCAData"`
 
-	// The name of secret that stores CPI configuration
+	// The secret that stores CPI configuration
 	// +kubebuilder:validation:Optional
-	SecretName string `json:"secretName"`
-
-	// The namespace of secret that stores CPI configuration
-	// +kubebuilder:validation:Optional
-	SecretNamespace string `json:"secretNamespace"`
+	CPISecretRef *v1.SecretReference `json:"cpiSecretRef"`
 }
 
 type NonParavirtualConfig struct {
 
 	// The IP address or FQDN of the vSphere endpoint
 	// +kubebuilder:validation:Optional
-	Server string `json:"server"`
+	VCenterAPIEndpoint string `json:"vCenterAPIEndpoint"`
 
 	// The datacenter in which VMs are created/located
 	// +kubebuilder:validation:Optional

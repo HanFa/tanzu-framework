@@ -86,14 +86,19 @@ spec:
                       clientCertKeyData:
                         description: Client certificate key for NSX-T
                         type: string
-                      host:
-                        description: The NSX-T server
-                        type: string
-                      insecureFlag:
-                        description: InsecureFlag is to be set to true if NSX-T uses
-                          self-signed cert
-                        type: boolean
-                      nsxtCredentialsRef:
+                      cpiSecretRef:
+                        description: The secret that stores CPI configuration
+                        properties:
+                          name:
+                            description: Name is unique within a namespace to reference
+                              a secret resource.
+                            type: string
+                          namespace:
+                            description: Namespace defines the space within which
+                              the secret name must be unique.
+                            type: string
+                        type: object
+                      credentialRef:
                         description: A secret reference that contains Nsx-T login
                           credentials to access NSX-T consists of the field username
                           and password
@@ -107,6 +112,13 @@ spec:
                               the secret name must be unique.
                             type: string
                         type: object
+                      host:
+                        description: The NSX-T server
+                        type: string
+                      insecure:
+                        description: Insecure is to be set to true if NSX-T uses self-signed
+                          cert
+                        type: boolean
                       podRoutingEnabled:
                         default: false
                         description: A flag that enables pod routing
@@ -119,7 +131,7 @@ spec:
                         description: The certificate authority for the server certificate
                           for locally signed certificates
                         type: string
-                      routes:
+                      route:
                         description: Route configuration for NSXT
                         properties:
                           clusterCidr:
@@ -129,12 +141,6 @@ spec:
                             description: NSX-T T0/T1 logical router path
                             type: string
                         type: object
-                      secretName:
-                        description: The name of secret that stores CPI configuration
-                        type: string
-                      secretNamespace:
-                        description: The namespace of secret that stores CPI configuration
-                        type: string
                       vmcAccessToken:
                         description: VMCAccessToken is VMC access token for token
                           based authentication
@@ -147,9 +153,6 @@ spec:
                   region:
                     description: The region used by vSphere multi-AZ feature
                     type: string
-                  server:
-                    description: The IP address or FQDN of the vSphere endpoint
-                    type: string
                   tlsCipherSuites:
                     default: TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
                     description: External arguments for cloud provider
@@ -157,6 +160,9 @@ spec:
                   tlsThumbprint:
                     description: The cryptographic thumbprint of the vSphere endpoint's
                       certificate. Default value is "".
+                    type: string
+                  vCenterAPIEndpoint:
+                    description: The IP address or FQDN of the vSphere endpoint
                     type: string
                   vSphereCredentialRef:
                     description: A secret reference that contains vSphere login credentials
