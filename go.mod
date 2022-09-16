@@ -23,7 +23,7 @@ require (
 	github.com/adrg/xdg v0.4.0
 	github.com/aunum/log v0.0.0-20200821225356-38d2e2c8b489
 	github.com/cppforlife/go-cli-ui v0.0.0-20200716203538-1e47f820817f
-	github.com/docker/docker v20.10.16+incompatible
+	github.com/docker/docker v20.10.18+incompatible
 	github.com/elazarl/go-bindata-assetfs v1.0.1
 	github.com/fatih/color v1.13.0
 	github.com/ghodss/yaml v1.0.0
